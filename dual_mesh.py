@@ -6,12 +6,29 @@ import numpy as np
 
 def array_intersection(a, b):
     """Returns a boolean array of where b array's elements appear in the a array"""
+    # Source: https://stackoverflow.com/questions/8317022/get-intersecting-rows-across-two-2d-numpy-arrays
     if not isinstance(a, np.ndarray):
         a = np.array(a)
     if not isinstance(b, np.ndarray):
         b = np.array(b)
-    tmp=np.prod(np.swapaxes(a[:,:,None],1,2)==b,axis=2)
-    return np.sum(np.cumsum(tmp,axis=0)*tmp==1,axis=1).astype(bool)
+    tmp = np.prod(np.swapaxes(a[:, :, None], 1, 2) == b, axis=2)
+    return np.sum(np.cumsum(tmp, axis=0) * tmp == 1, axis=1).astype(bool)
+
+
+def reorder_points(points):
+    """Returns the order of given points, such that they are anticlockwise.
+
+    Parameters:
+        points:     numpy.ndarray
+            Vertices of the polygon
+    """
+    assert isinstance(points, np.ndarray)
+    # Calculate the center of the points
+    c = points.mean(axis=0)
+    # Calculate the angles between the horizontal and the line joining center to each point
+    angles = np.arctan2(points[:,1] - c[1], points[:,0] - c[0])
+
+    return np.argsort(angles).tolist()
 
 
 def get_area(points):
@@ -25,8 +42,10 @@ def get_area(points):
 
     # shift all the points by one
     shifted = np.roll(points, 1, axis=0)
+
     # Use the shoelace formula
     area = 0.5 * np.sum((shifted[:, 0] + points[:, 0])*(shifted[:, 1] - points[:, 1]))
+
     return np.abs(area)
 
 
@@ -64,9 +83,13 @@ def get_dual(mesh, order=False):
 
     # Get the first set of points of the dual mesh
     new_points = get_dual_points(mesh, 0)
+    vert_idxs = np.arange(len(new_points)).tolist()
+    if order:
+        new_order = reorder_points(new_points[vert_idxs])
+        vert_idxs = np.array(vert_idxs)[new_order].tolist()
 
     # Create the dictionary that will hold the points of the mesh, as well as the indices
-    dual = {"points": new_points, "cells": [np.arange(len(new_points)).tolist()]}
+    dual = {"points": new_points, "cells": [vert_idxs]}
 
     for idx in range(1, len(mesh.points)):
         # Get the dual mesh points for a given mesh vertex
@@ -84,10 +107,8 @@ def get_dual(mesh, order=False):
 
         if order:
             # Reorder the indices, such that points are anticlockwise
-            verts = dual["points"][vert_idxs]
-            c = verts.mean(axis=0)
-            angles = np.arctan2(verts[:,1] - c[1], verts[:,0] - c[0])
-            vert_idxs = np.array(vert_idxs)[np.argsort(angles)].tolist()
+            new_order = reorder_points(dual["points"][vert_idxs])
+            vert_idxs = np.array(vert_idxs)[new_order].tolist()
 
         dual["cells"].append(vert_idxs)
 
