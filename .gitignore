@@ -6,3 +6,6 @@ __pycache__/
 
 # the notebook
 main.ipynb
+
+# Another input file
+example.vtu
