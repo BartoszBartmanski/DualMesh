@@ -26,7 +26,7 @@ def main():
         cell_points = dual_msh["points"][cell + [cell[0]]]
 
         # We plot the points of the current polygon
-        ax.plot(cell_points[:, 0], cell_points[:, 1], ":", color="black")
+        ax.plot(cell_points[:, 0], cell_points[:, 1], color="black")
 
     # We add a legend to the figure
     fig.legend([ax.lines[0], ax.lines[-1]], ["Mesh", "Dual mesh"])
