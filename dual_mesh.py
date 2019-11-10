@@ -61,11 +61,13 @@ def get_dual_points(mesh, index):
 
     """
     assert isinstance(mesh, meshio._mesh.Mesh)
-    v1 = mesh.points[mesh.cells["vertex"][np.where(mesh.cells["vertex"] == index)[0]]].mean(axis=1)
-    v2 = mesh.points[mesh.cells["line"][np.where(mesh.cells["line"] == index)[0]]].mean(axis=1)
-    v3 = mesh.points[mesh.cells["triangle"][np.where(mesh.cells["triangle"] == index)[0]]].mean(axis=1)
-    verts = np.concatenate((v1, v2, v3), axis=0)
-    return verts
+    _cell_types = ("vertex", "line", "triangle")
+    ## For each type of cell do the following
+    # Find the cells where the given index appears
+    _idxs = [np.where(mesh.cells[x] == index)[0] for x in _cell_types]
+    # Find the centers of all the cells
+    _vs = [mesh.points[mesh.cells[x][_idxs[i]]].mean(axis=1) for i,x in enumerate(_cell_types)]
+    return np.concatenate(_vs, axis=0)
 
 
 def get_dual(mesh, order=False):
