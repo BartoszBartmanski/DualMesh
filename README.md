@@ -43,10 +43,10 @@ ax.triplot(msh.points[:, 0], msh.points[:, 1], msh.cells["triangle"])
 
 We loop over the polygons (cells) in the dual mesh and we plot them
 ```
-for cell in dual_msh["cells"]:
+for cell in dual_msh.cells["polygon"]:
     # We get the coordinates of the current polygon.
     # We repeat one of the points, so that when plotted, we get a complete polygon
-    cell_points = dual_msh["points"][cell + [cell[0]]]
+    cell_points = dual_msh.points[cell + [cell[0]]]
 
     # We plot the points of the current polygon
     ax.plot(cell_points[:, 0], cell_points[:, 1], ":", color="black")
