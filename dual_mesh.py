@@ -89,28 +89,32 @@ def get_dual(mesh, order=False):
         new_order = reorder_points(new_points[vert_idxs])
         vert_idxs = np.array(vert_idxs)[new_order].tolist()
 
-    # Create the dictionary that will hold the points of the mesh, as well as the indices
-    dual = {"points": new_points, "cells": [vert_idxs]}
+    # Create the containers for the points and the polygons of the dual mesh
+    dual_points = new_points
+    dual_cells = {"polygon": [vert_idxs]}
 
     for idx in range(1, len(mesh.points)):
         # Get the dual mesh points for a given mesh vertex
         new_points = get_dual_points(mesh, idx)
 
-        # Find which of these new_points are already present in the dual["points"]
-        inter = array_intersection(new_points, dual["points"])
+        # Find which of these new_points are already present in the dual_points
+        inter = array_intersection(new_points, dual_points)
 
         # Add new_points to the dual mesh points that are not already there
-        dual["points"] = np.concatenate((dual["points"], new_points[~inter]))
+        dual_points = np.concatenate((dual_points, new_points[~inter]))
 
         # Add the indices for the new cell to dual["cells"]
-        inter = array_intersection(dual["points"], new_points)
+        inter = array_intersection(dual_points, new_points)
         vert_idxs = np.where(inter)[0].tolist()
 
         if order:
             # Reorder the indices, such that points are anticlockwise
-            new_order = reorder_points(dual["points"][vert_idxs])
+            new_order = reorder_points(dual_points[vert_idxs])
             vert_idxs = np.array(vert_idxs)[new_order].tolist()
 
-        dual["cells"].append(vert_idxs)
+        dual_cells["polygon"].append(vert_idxs)
+
+    # Create the meshio mesh object
+    dual = meshio._mesh.Mesh(dual_points, dual_cells)
 
     return dual

@@ -7,6 +7,10 @@ Python module for generating dual meshes.
 * meshio >= 3.2.6
 * numpy >= 1.16.3
 
+## Installation
+
+Copy dual_mesh.py from the repository to where you wish to use it.
+
 ## Example
 
 We can go through the example of using dual_mesh.py module.
