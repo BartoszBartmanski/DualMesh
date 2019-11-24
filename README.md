@@ -1,4 +1,4 @@
-# DualMesh
+# DualMesh [![Build Status](https://travis-ci.org/BartoszBartmanski/DualMesh.svg?branch=master)](https://travis-ci.org/BartoszBartmanski/DualMesh)
 
 Python module for generating dual meshes.
 
