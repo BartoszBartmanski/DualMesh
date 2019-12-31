@@ -9,7 +9,11 @@ Python module for generating dual meshes.
 
 ## Installation
 
-Copy dual_mesh.py from the repository to where you wish to use it.
+Either install using pip
+```
+pip install dualmesh
+```
+or copy the file dualmesh.py from the dualmesh directory in this repository.
 
 ## Example
 

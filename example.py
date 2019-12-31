@@ -3,7 +3,7 @@
 # For opening a mesh file
 import meshio
 # For generating a dual mesh
-import dual_mesh as dm
+import dualmesh as dm
 # For plotting both the mesh and dual mesh
 import matplotlib.pyplot as plt
 
