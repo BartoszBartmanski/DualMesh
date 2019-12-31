@@ -24,7 +24,7 @@ First, we import all the needed modules
 # For opening a mesh file
 import meshio
 # For generating a dual mesh
-import dual_mesh as dm
+import dualmesh as dm
 # For plotting both the mesh and dual mesh
 import matplotlib.pyplot as plt
 ```
@@ -64,4 +64,4 @@ fig.legend([ax.lines[0], ax.lines[-1]], ["Mesh", "Dual mesh"])
 fig.savefig("example.png")
 ```
 
-![Mesh and dual mesh](example.png)
+![Mesh and dual mesh](https://github.com/BartoszBartmanski/DualMesh/blob/master/example.png)
