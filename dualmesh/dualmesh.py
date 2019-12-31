@@ -23,6 +23,7 @@ def reorder_points(points):
             Vertices of the polygon
     """
     assert isinstance(points, np.ndarray)
+    assert points.shape[1] > 1
     # Calculate the center of the points
     c = points.mean(axis=0)
     # Calculate the angles between the horizontal and the line joining center to each point
@@ -53,14 +54,14 @@ def get_dual_points(mesh, index):
     """Returns the points of the dual mesh nearest to the point in the mesh given by the index.
 
     Parameters:
-        mesh:       meshio._mesh.Mesh object
+        mesh:       meshio.Mesh object
             Input mesh.
 
         index:      int
             Index of the point in the input mesh for which to calculate the nearest points of the dual mesh.
 
     """
-    assert isinstance(mesh, meshio._mesh.Mesh)
+    assert isinstance(mesh, meshio.Mesh)
     ## For each type of cell do the following
     # Find the cells where the given index appears
     _idxs = [np.where(mesh.cells[x] == index)[0] for x in mesh.cells]
@@ -74,13 +75,13 @@ def get_dual(mesh, order=False):
     dual["cells"] giving the indicies of all the cells of the dual mesh.
 
     Parameters:
-        mesh:       meshio._mesh.Mesh object
+        mesh:       meshio.Mesh object
             Input mesh.
 
         order:      boolean
             Whether to reorder the indices of each cell, such that they are in anticlockwise order.
     """
-    assert isinstance(mesh, meshio._mesh.Mesh)
+    assert isinstance(mesh, meshio.Mesh)
 
     # Get the first set of points of the dual mesh
     new_points = get_dual_points(mesh, 0)
@@ -115,6 +116,6 @@ def get_dual(mesh, order=False):
         dual_cells["polygon"].append(vert_idxs)
 
     # Create the meshio mesh object
-    dual = meshio._mesh.Mesh(dual_points, dual_cells)
+    dual = meshio.Mesh(dual_points, dual_cells)
 
     return dual

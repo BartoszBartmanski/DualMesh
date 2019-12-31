@@ -1,8 +1,8 @@
 language: python
 python:
-  - "3.5"
   - "3.6"
   - "3.7"
+
 install:
   - sudo apt-get update
   # We do this conditionally because it saves us some downloading if the
@@ -24,4 +24,4 @@ install:
   - conda activate test-environment
 
 script:
-  - python example.py
+  - python unittests.py
