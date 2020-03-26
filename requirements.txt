@@ -1,2 +1,2 @@
-meshio>=3.2
+meshio>=4.0
 numpy>=1.16

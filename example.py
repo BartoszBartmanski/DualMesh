@@ -17,10 +17,10 @@ def main():
 
     # We use matplotlib to plot the original mesh
     fig, ax = plt.subplots()
-    ax.triplot(msh.points[:, 0], msh.points[:, 1], msh.cells["triangle"])
+    ax.triplot(msh.points[:, 0], msh.points[:, 1], msh.cells[2][1]])
 
     # We loop over the polygons (cells) in the dual mesh and we plot them
-    for cell in dual_msh.cells["polygon"]:
+    for cell in dual_msh.cells[0][1]]:
         # We get the coordinates of the current polygon.
         # We repeat one of the points, so that when plotted, we get a complete polygon
         cell_points = dual_msh.points[cell + [cell[0]]]
