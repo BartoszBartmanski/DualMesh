@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dualmesh",
-    version="0.14.0",
+    version="0.14.1",
     author="Bartosz Bartmanski",
     author_email="bartoszbartmanski@gmail.com",
     description="Python module for generating dual meshes",

@@ -64,4 +64,4 @@ fig.legend([ax.lines[0], ax.lines[-1]], ["Mesh", "Dual mesh"])
 fig.savefig("example.png")
 ```
 
-![Mesh and dual mesh](https://github.com/BartoszBartmanski/DualMesh/blob/master/example.png)
+![Mesh and dual mesh](examples/example.png)
